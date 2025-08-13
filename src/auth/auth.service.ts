@@ -41,9 +41,12 @@ export class AuthService {
 
   login(user: AuthUser) {
     const payload = { username: user.username, sub: user.id };
-    this.logger.log(`Generating JWT for user: ${user.username}`);
+    const token = this.jwtService.sign(payload);
+    this.logger.log(
+      `Generating JWT for user: ${user.username}, id: ${user.id}, token: ${token.substring(0, 10)}`,
+    );
     return {
-      access_token: this.jwtService.sign(payload),
+      access_token: token,
     };
   }
 
